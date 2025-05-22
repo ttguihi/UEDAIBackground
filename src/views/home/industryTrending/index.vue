@@ -53,6 +53,7 @@
 
 
           <div class="charts_content">
+
           </div>
         </div>
       </div>
@@ -71,45 +72,72 @@
         </div>
         <div class="trending_content">
           <div class="left_content">
-            <div class="active">行业趋势</div>
+            <div :class="{ active: activeContent === 'industry' }" @click="gotoIndustry1">行业趋势</div>
 
-            <div>关键词趋势</div>
+            <div :class="{ active: activeContent === 'keyword' }" @click="gotoKeyword1">关键词趋势</div>
 
 
           </div>
-          <div class="right_content">
-            <div class="card">
+          <div class="right_content" v-if="activeContent === 'industry'">
+            <div class="card" v-for="item in 10">
               <div class="first_letter">
-
+                智
               </div>
               <div class="industry_info">
                 <div class="industry_name">智能制造</div>
-                <div class="industry_compare">企业竞争度</div>
-                <div class="industry_index">行业指数</div>
-                <div class="AIrecognise">AI认知层级</div>
-                <div class="degree">优化程度</div>
+                <div class="industry_content">
+                  <div class="industry_compare">
+                    企业竞争度:
+                    <div class="stars" v-for="itm in 5">
+                    </div>
+
+                  </div>
+                  <div class="industry_index">行业指数:&nbsp;&nbsp;&nbsp;
+                    912445
+                  </div>
+                  <div class="AIrecognise">AI认知层级:&nbsp;&nbsp;&nbsp;ABCDE</div>
+                  <div class="degree">优化程度:&nbsp;&nbsp;&nbsp;&nbsp;高中低</div>
+                  <button class="queryButton">查询关键词</button>
+                </div>
               </div>
-
-              <button class="queryButton">查询关键词</button>
-
             </div>
-            <div class="card">
-            </div>
+
           </div>
+          <div class="right_content" v-else>
+            <div class="card" v-for="item in 2">
+              <div class="first_letter">
+                智
+              </div>
+              <div class="industry_info">
+                <div class="industry_name">智能制造</div>
+                <div class="industry_content">
+                  <div class="industry_compare">
+                    企业竞争度:
+                    <div class="stars" v-for="itm in 5">
+                    </div>
+
+                  </div>
+                  <div class="industry_index">行业指数:&nbsp;&nbsp;&nbsp;
+                    912445
+                  </div>
+                  <div class="AIrecognise">AI认知层级:&nbsp;&nbsp;&nbsp;ABCDE</div>
+                  <div class="degree">优化程度:&nbsp;&nbsp;&nbsp;&nbsp;高中低</div>
+                  <button class="queryButton">查询关键词</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
         </div>
       </div>
     </div>
   </div>
+  <yButton></yButton>
 </template>
 
 
 <style scoped lang='scss'>
-@media (max-width: 500px) {
-  .body {
-    padding: 0;
-  }
-}
-
 .body {
 
   background: url("@/assets/pcbj.png") no-repeat center fixed;
@@ -134,7 +162,7 @@
     width: 0px;
     height: 20px;
     margin: 0 3%;
-    ;
+
     border: 1px solid #888888;
 
   }
@@ -167,10 +195,13 @@
     text-align: left;
     font-style: normal;
     text-transform: none;
+
+
     color: transparent;
     background-clip: text;
     -webkit-background-clip: text;
     background-image: linear-gradient(0deg, #2254F4 0%, #9438FC 100%);
+
   }
 
 }
@@ -391,6 +422,8 @@
       flex: 78;
       background: #FFFFFF;
 
+
+
     }
   }
 
@@ -429,11 +462,11 @@
         .searchButton {
           background: linear-gradient(to right, #2852f4 1%, #9438fc);
           ;
+          border-radius: 5px;
+          cursor: pointer;
           width: 15%;
           border: none;
-          border-radius: 5px;
           color: #fff;
-          cursor: pointer;
         }
       }
     }
@@ -446,12 +479,11 @@
         flex: 1;
         background-color: #ffffff;
 
-        .active {
-          border-left: solid 2px #4734f7;
-          background: radial-gradient(#cebbff, #fefeff);
-        }
+
 
         div {
+          box-sizing: border-box;
+          cursor: pointer;
           text-align: center;
           line-height: 70px;
           height: 70px;
@@ -465,8 +497,11 @@
         padding-top: 1%;
         padding-left: 1%;
         min-width: 40px;
+        display: flex;
+        flex-direction: column;
 
         .card {
+          box-sizing: border-box;
           width: 98%;
           height: 80px;
           border-radius: 5px;
@@ -474,10 +509,15 @@
           display: flex;
           align-items: center;
           justify-content: space-between;
+          /* 添加此行以使内容分散 */
           margin-bottom: 15px;
 
           .first_letter {
-
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #ffffff;
+            font-size: 3em;
             margin-left: 10px;
             width: 65px;
             height: 65px;
@@ -487,37 +527,76 @@
 
           .industry_info {
             display: flex;
-            flex: auto;
+            flex-direction: column;
             margin-left: 20px;
+            flex: 1;
+            /* 使其占据可用空间 */
+
 
             .industry_name {
+
               height: 20%;
               flex: 1;
-              background-color: pink;
+              background-color: transparent;
+              margin-bottom: 2.5%
             }
 
-            .industry_compare {
-              height: 20%;
-              flex: 1;
-              background-color: lightblue;
-            }
+            .industry_content {
+              display: flex;
 
-            .industry_index {
-              height: 20%;
-              flex: 1;
-              background-color: lightgreen;
-            }
+              .industry_compare {
+                white-space: nowrap;
+                height: 20%;
+                flex: 1;
+                background-color: #ffffff;
+                display: flex;
+                margin-right: 30px;
 
-            .AIrecognise {
-              height: 20%;
-              flex: 1;
-              background-color: lightyellow;
-            }
+                .stars {
+                  height: 20px;
+                  width: 20px;
+                  background: url("@/assets/星星_1.png") no-repeat;
+                  background-size: 100% 100%;
+                }
+              }
 
-            .degree {
-              height: 20%;
-              flex: 1;
-              background-color: lightgray;
+              .industry_index {
+                white-space: nowrap;
+                height: 20%;
+                flex: 1;
+                background-color: #fff;
+                margin-right: 15px;
+              }
+
+              .AIrecognise {
+                white-space: nowrap;
+                height: 20%;
+                flex: 1;
+                background-color: #fff;
+                margin-right: 20px;
+              }
+
+              .degree {
+                white-space: nowrap;
+                height: 20%;
+                flex: 1;
+                background-color: #fff;
+              }
+
+              .queryButton {
+                flex: 1;
+                /* 使按钮占据可用空间 */
+                color: #fff;
+                background: linear-gradient(to right, #2852f4 1%, #9438fc);
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                white-space: nowrap;
+                /* 防止文本换行 */
+                margin-left: auto;
+                /* 将按钮推到右边 */
+              }
+
             }
 
 
@@ -537,12 +616,19 @@
   color: #2852f4;
   /* 高亮字体颜色 */
 }
+
+.active {
+
+  border-left: 2px solid #2254F4;
+  background: radial-gradient(#cebbff, #fefeff);
+}
 </style>
 
 <script setup>
 import { ref, onMounted } from 'vue'
 import { getCurrentTime, getCurrentDate } from '@/utils/getCurrentTime.js'
 import * as echarts from 'echarts';
+import yButton from '@/components/button/index.vue'
 
 let nowTime = ref('');
 nowTime.value = getCurrentTime();
@@ -571,11 +657,12 @@ let myOption = ref({
 });
 
 let myChart;
-const activeButton = ref('industry'); // 新增响应式变量
 
+const activeButton = ref('industry'); // 新增响应式变量
+let activeContent = ref('industry');
 const gotoKeyword = () => {
   activeButton.value = 'keyword'; // 更新激活按钮
-  myOption.value.xAxis.data = ['汉格尔', "行业而"];
+  myOption.value.xAxis.data = ['汉格尔', "行业而", '行业2', '行业2', '行业2', '行业2', '行业2', , '行业2', '行业2'];
   myChart.setOption(myOption.value);
 }
 
@@ -583,6 +670,15 @@ const gotoIndustry = () => {
   activeButton.value = 'industry'; // 更新激活按钮
   myOption.value.xAxis.data = ['行业1', '行业3', '行业2', '行业2', '行业2', '行业2', '行业2', '行业2', '行业2', '行业2'];
   myChart.setOption(myOption.value);
+}
+
+const gotoKeyword1 = () => {
+  console.log(1)
+  activeContent.value = 'keyword'; // 更新激活内容
+}
+
+const gotoIndustry1 = () => {
+  activeContent.value = 'industry'; // 更新激活内容
 }
 
 onMounted(() => {
