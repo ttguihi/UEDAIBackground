@@ -40,9 +40,14 @@
             <span>AI交互量</span>
             <div class="top">Top10</div>
             <div class="categories_title">
-              <button class="industry_title">行业</button>
-              <button class="keyword_title">关键词</button>
+              <button class="industry_title" :class="{ active_title: activeButton === 'industry' }"
+                @click="gotoIndustry">行业
+              </button>
+              <button class="keyword_title" :class="{ active_title: activeButton === 'keyword' }"
+                @click="gotoKeyword">关键词
+              </button>
             </div>
+
 
           </div>
 
@@ -88,14 +93,10 @@
               <button class="queryButton">查询关键词</button>
 
             </div>
-
             <div class="card">
-
             </div>
-
           </div>
         </div>
-
       </div>
     </div>
   </div>
@@ -104,7 +105,7 @@
 
 <style scoped lang='scss'>
 @media (max-width: 500px) {
-  .body{
+  .body {
     padding: 0;
   }
 }
@@ -346,6 +347,7 @@
         align-self: flex-end;
         justify-content: space-around;
 
+
         .industry_title {
           border: none;
           display: block;
@@ -353,7 +355,7 @@
           display: flex;
           justify-content: center;
           align-items: center;
-          background-color: #fff;
+          background-color: #FFF2DA;
           text-align: center;
           flex: 1;
           font-weight: 500;
@@ -373,8 +375,9 @@
           justify-content: center;
           align-items: center;
           text-align: center;
-          background-color: #fff2da;
           font-weight: 500;
+          background-color: #FFF2DA;
+
           cursor: pointer;
         }
       }
@@ -525,84 +528,68 @@
   }
 
 }
+
+.active_title {
+  background-color: #ffffff !important;
+  /* 高亮背景色 */
+  border: 2px solid #2852f4;
+  /* 高亮边框 */
+  color: #2852f4;
+  /* 高亮字体颜色 */
+}
 </style>
 
 <script setup>
-import { ref, reactive, onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import { getCurrentTime, getCurrentDate } from '@/utils/getCurrentTime.js'
-import axios from 'axios'
-let name = ref('')
-
-let getName = async (id) => {
-  let res = await axios.get('https://m1.apifoxmock.com/m1/6066905-5757134-default/user/1')
-  name.value = res.data.name
-}
-getName(1)
-name.value = axios.get('https://m1.apifoxmock.com/m1/6066905-5757134-default/user/1').then(res => {
-  console.log(res)
-})
-let nowTime = ref('')
-nowTime.value = getCurrentTime()
-setInterval(() => {
-  nowTime.value = getCurrentTime()
-}, 1000);
-let year = ref('')
-let month = ref('')
-let day = ref('')
-year.value = new Date().getFullYear()
-month.value = new Date().getMonth() + 1
-day.value = +new Date().getDate()
-
-
-
 import * as echarts from 'echarts';
 
+let nowTime = ref('');
+nowTime.value = getCurrentTime();
+setInterval(() => {
+  nowTime.value = getCurrentTime();
+}, 1000);
+
+let year = ref(new Date().getFullYear());
+let month = ref(new Date().getMonth() + 1);
+let day = ref(new Date().getDate());
+
+let myOption = ref({
+  xAxis: {
+    type: 'category',
+    data: ['行业1', '行业3', '行业2', '行业2', '行业2', '行业2', '行业2', '行业2', '行业2', '行业2'],
+  },
+  yAxis: {
+    type: 'value'
+  },
+  series: [
+    {
+      data: [120, 200, 150, 80, 70, 110, 130, 100, 90, 40],
+      type: 'bar'
+    }
+  ]
+});
+
+let myChart;
+const activeButton = ref('industry'); // 新增响应式变量
+
+const gotoKeyword = () => {
+  activeButton.value = 'keyword'; // 更新激活按钮
+  myOption.value.xAxis.data = ['汉格尔', "行业而"];
+  myChart.setOption(myOption.value);
+}
+
+const gotoIndustry = () => {
+  activeButton.value = 'industry'; // 更新激活按钮
+  myOption.value.xAxis.data = ['行业1', '行业3', '行业2', '行业2', '行业2', '行业2', '行业2', '行业2', '行业2', '行业2'];
+  myChart.setOption(myOption.value);
+}
+
 onMounted(() => {
-  var chartDom = document.querySelector('.charts_content');
-  var myChart = echarts.init(chartDom, null, {
+  let chartDom = document.querySelector('.charts_content');
+  myChart = echarts.init(chartDom, null, {
     renderer: 'svg'
   });
-  var option;
-
-  option = {
-    xAxis: {
-      type: 'category',
-      data: ['行业1', '行业2', '行业2', '行业2', '行业2', '行业2', '行业2', '行业2', '行业2', '行业2'],
-    },
-    yAxis: {
-      type: 'value'
-    },
-    series: [
-      {
-        data: [
-          {
-            value: 120,
-            itemStyle: {
-              color: '#00a900',
-              borderColor: '#000000',
-            }
-          },
-          {
-            value: 200,
-            itemStyle: {
-              color: '#a90000'
-            }
-          },
-          150,
-          80,
-          70,
-          110,
-          130,
-          100,
-          90,
-          40,
-        ],
-        type: 'bar'
-      }
-    ]
-  };
-
-  option && myChart.setOption(option);
-})
-
+  myChart.setOption(myOption.value);
+});
 </script>
