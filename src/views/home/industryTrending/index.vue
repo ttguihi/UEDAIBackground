@@ -1,7 +1,11 @@
 <template>
   <div class="body">
     <div class="title">
-      <img src="@/assets/Group_1081.png" alt="" class="UED_logo">
+      <img
+        src="@/assets/Group_1081.png"
+        alt=""
+        class="UED_logo"
+      >
       <div class="line"></div>
       <div class="UED_left">
         友益典·
@@ -27,7 +31,7 @@
           <div class="lower_case">
             <div class="item"></div>
             <div class="gotoQuery">
-              <div class="URqueryText">进入UR查询系统</div>
+              <div class="URqueryText" @click="$router.push('/URsearch')">进入UR查询系统</div>
             </div>
           </div>
 
@@ -40,11 +44,17 @@
             <span>AI交互量</span>
             <div class="top">Top10</div>
             <div class="categories_title">
-              <button class="industry_title" :class="{ active_title: activeButton === 'industry' }"
-                @click="gotoIndustry">行业
+              <button
+                class="industry_title"
+                :class="{ active_title: activeButton === 'industry' }"
+                @click="gotoIndustry"
+              >行业
               </button>
-              <button class="keyword_title" :class="{ active_title: activeButton === 'keyword' }"
-                @click="gotoKeyword">关键词
+              <button
+                class="keyword_title"
+                :class="{ active_title: activeButton === 'keyword' }"
+                @click="gotoKeyword"
+              >关键词
               </button>
             </div>
 
@@ -65,21 +75,36 @@
             AI结果优化(AIRO)行业分析
           </div>
           <div class="trending_search">
-            <input class="searchInput" placeholder="搜索行业"></input>
+            <input
+              class="searchInput"
+              placeholder="搜索行业"
+            ></input>
             <button class="searchButton">搜索</button>
           </div>
 
         </div>
         <div class="trending_content">
           <div class="left_content">
-            <div :class="{ active: activeContent === 'industry' }" @click="gotoIndustry1">行业趋势</div>
+            <div
+              :class="{ active: activeContent === 'industry' }"
+              @click="gotoIndustry1"
+            >行业趋势</div>
 
-            <div :class="{ active: activeContent === 'keyword' }" @click="gotoKeyword1">关键词趋势</div>
+            <div
+              :class="{ active: activeContent === 'keyword' }"
+              @click="gotoKeyword1"
+            >关键词趋势</div>
 
 
           </div>
-          <div class="right_content" v-if="activeContent === 'industry'">
-            <div class="card" v-for="item in 10">
+          <div
+            class="right_content"
+            v-if="activeContent === 'industry'"
+          >
+            <div
+              class="card"
+              v-for="item in 10"
+            >
               <div class="first_letter">
                 智
               </div>
@@ -88,7 +113,10 @@
                 <div class="industry_content">
                   <div class="industry_compare">
                     企业竞争度:
-                    <div class="stars" v-for="itm in 5">
+                    <div
+                      class="stars"
+                      v-for="itm in 5"
+                    >
                     </div>
 
                   </div>
@@ -97,14 +125,24 @@
                   </div>
                   <div class="AIrecognise">AI认知层级:&nbsp;&nbsp;&nbsp;ABCDE</div>
                   <div class="degree">优化程度:&nbsp;&nbsp;&nbsp;&nbsp;高中低</div>
-                  <button class="queryButton">查询关键词</button>
+                  
+                  <themeButton
+                    type="themeColor"
+                    class="queryButton"
+                  >查询关键词</themeButton>
                 </div>
               </div>
             </div>
 
           </div>
-          <div class="right_content" v-else>
-            <div class="card" v-for="item in 2">
+          <div
+            class="right_content"
+            v-else
+          >
+            <div
+              class="card"
+              v-for="item in 2"
+            >
               <div class="first_letter">
                 智
               </div>
@@ -113,7 +151,10 @@
                 <div class="industry_content">
                   <div class="industry_compare">
                     企业竞争度:
-                    <div class="stars" v-for="itm in 5">
+                    <div
+                      class="stars"
+                      v-for="itm in 5"
+                    >
                     </div>
 
                   </div>
@@ -625,6 +666,7 @@
 </style>
 
 <script setup>
+import themeButton from '@/components/button/index.vue'
 import { ref, onMounted } from 'vue'
 import { getCurrentTime, getCurrentDate } from '@/utils/getCurrentTime.js'
 import * as echarts from 'echarts';
