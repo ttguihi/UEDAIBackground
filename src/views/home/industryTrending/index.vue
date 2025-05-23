@@ -31,7 +31,10 @@
           <div class="lower_case">
             <div class="item"></div>
             <div class="gotoQuery">
-              <div class="URqueryText" @click="$router.push('/URsearch')">进入UR查询系统</div>
+              <div
+                class="URqueryText"
+                @click="$router.push('/URsearch')"
+              >进入UR查询系统</div>
             </div>
           </div>
 
@@ -125,7 +128,7 @@
                   </div>
                   <div class="AIrecognise">AI认知层级:&nbsp;&nbsp;&nbsp;ABCDE</div>
                   <div class="degree">优化程度:&nbsp;&nbsp;&nbsp;&nbsp;高中低</div>
-                  
+
                   <themeButton
                     type="themeColor"
                     class="queryButton"
